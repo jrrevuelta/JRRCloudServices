@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+
+  <Realm className="org.apache.catalina.realm.LockOutRealm">
+    
+    <Realm
+        className="org.apache.catalina.realm.DataSourceRealm"
+        dataSourceName="jdbc/testsrvc-DS"
+        userTable="Usuario" userNameCol="IDFR" userCredCol="Password"
+        userRoleTable="Role" roleNameCol="Role">
+        
+      <CredentialHandler className="org.jrrevuelta.security.passwords.JrrCredentialHandler"/>
+          
+    </Realm>
+    
+  </Realm>
+  
+</Context>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+
+  <!--  DataSource deployment configuration  -->
+  <!-- This application is for testing the cloud services purposes. It doesn't require a DataSource (or Database
+  <Resource 
+      id="jdbc/{appname}-DS" 
+      type="javax.sql.DataSource"  
+      auth="Container">
+		      jtaManaged=true
+		      jdbcDriver=com.mysql.cj.jdbc.Driver
+		      jdbcUrl=jdbc:mysql://localhost:3306/{appname}-DB?serverTimezone=UTC
+		      userName=
+		      password=
+		      maxActive=100
+		      maxIdle=30
+		      validationQuery=/* ping */
+		      testOnBorrow=true
+		      testWhileIdle=true
+		      timeBetweenEvictionRunsMillis=10000
+		      minEvictableIdleTimeMillis=60000
+  </Resource>
+  -->
+
+  <!--  AWS IAM Application Service User Configuration  -->
+  <!-- IAM userId and credentials are global. The 'region' is very relevant, because
+       all the AWS services to be consumed MUST be on the same region in order to be
+       able to share credentials. And preferably in the same region where the app is
+       deployed.
+
+          iamUserName={jrr|dst}-{appName}-app{dev|prod}
+
+  -->
+  <Resource
+      id="cloud/CloudServicesContext"
+      class-name="org.jrrevuelta.cloudservices.aws.AWSContext">
+          iamUserName=
+          iamUserAccessKeyId=
+          iamUserSecretAccessKey=
+          awsRegion=
+  </Resource>
+  
+</resources>
