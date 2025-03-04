@@ -7,6 +7,6 @@
                           https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
       version="6.0">
   
-  <display-name>Pruebas Cloud Services - any vendor</display-name>
+  <display-name>Cloud Services - any vendor, any service.</display-name>
   
 </web-app>

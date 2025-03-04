@@ -1,10 +1,13 @@
 package org.jrrevuelta.test.awscloudservices.rest;
 
+import java.net.URI;
 import java.util.Base64;
+import java.util.logging.Logger;
 
 import org.jrrevuelta.cloudservices.CloudServiceContext;
 import org.jrrevuelta.cloudservices.aws.AWSContext;
 import org.jrrevuelta.cloudservices.aws.KMSCypher;
+import org.jrrevuelta.cloudservices.aws.S3ObjectManager;
 
 import jakarta.annotation.Resource;
 import jakarta.ws.rs.core.MediaType;
@@ -21,16 +24,13 @@ public class TestResourceService implements TestResource {
 	private static final String KMS_KEY_ID = "alias/jrr-testcloudservices-key-001";  /// Needed only to access/use the KMS encrypt/decrypt functions
 	/// Actually, in the case of AWS, only this KMS KeyId (or alias) is needed. But in the case of GCP, there are two components: The KMS KeyId and the KeyringId.
 	
+	private static final Logger log = Logger.getLogger("org.jrrevuelta.test.awscloudservices.rest.TestResourceService");
 	
 	public TestResourceService() {
 		super();
+		log.fine("JRR: Instantiating TestResourceService.");
 	}
 	
-	@Override
-	public Response getDocsList() {
-		return null;
-	}
-
 	@Override
 	public Response getEncStr(String plaintext) {
 		
@@ -75,6 +75,24 @@ public class TestResourceService implements TestResource {
 		}
 		return builder.build();
 		
+	}
+
+	@Override
+	public Response putObject(String bucket, String key, String contentType, byte[] contents) {
+		
+		ResponseBuilder builder = null;
+		
+		if (context instanceof AWSContext) {
+			S3ObjectManager s3Access = new S3ObjectManager((AWSContext)context);
+			s3Access.setContentType(contentType);
+			s3Access.putS3Object(bucket, key, contents);
+			builder = Response.created(URI.create("/cloud-service/object/" + key));
+			
+		} else {
+			builder = Response.serverError();
+		}
+		
+		return builder.build();
 	}
 	
 }

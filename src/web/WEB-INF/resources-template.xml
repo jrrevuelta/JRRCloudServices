@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<resources>
+<!-- Build your own resources.xml based on this file, this way your resources.xml with credentials,
+doesn't go to the repository in github (it is .gitignored), and are not in risk of exposure. 
+ -->
 
+<resources>
+  
   <!--  DataSource deployment configuration  -->
-  <!-- This application is for testing the cloud services purposes. It doesn't require a DataSource (or Database
+  <!-- If your application will use some kind of data storage based on DataSource. Such as Jakarta EE Persistence.
+  This example will create a DataSource from a connection to a MySQL Database.
   <Resource 
       id="jdbc/{appname}-DS" 
       type="javax.sql.DataSource"  
@@ -22,16 +27,16 @@
 		      minEvictableIdleTimeMillis=60000
   </Resource>
   -->
-
+  
+  
   <!--  AWS IAM Application Service User Configuration  -->
   <!-- IAM userId and credentials are global. The 'region' is very relevant, because
        all the AWS services to be consumed MUST be on the same region in order to be
        able to share credentials. And preferably in the same region where the app is
        deployed.
-
+       
           iamUserName={jrr|dst}-{appName}-app{dev|prod}
-
-  -->
+       
   <Resource
       id="cloud/CloudServicesContext"
       class-name="org.jrrevuelta.cloudservices.aws.AWSContext">
@@ -40,5 +45,6 @@
           iamUserSecretAccessKey=
           awsRegion=
   </Resource>
+  -->
   
 </resources>
