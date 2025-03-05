@@ -9,4 +9,13 @@
   
   <display-name>Cloud Services - any vendor, any service.</display-name>
   
+  <servlet>
+    <servlet-name>jakarta.ws.rs.core.Application</servlet-name>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>jakarta.ws.rs.core.Application</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

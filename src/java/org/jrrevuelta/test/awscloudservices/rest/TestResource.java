@@ -21,11 +21,11 @@ import jakarta.ws.rs.core.Response;
 public interface TestResource {
 	
 	@POST
-	@Path("/enc")
+	@Path("/encrypt")
 	public Response getEncStr(String plaintext);
 	
 	@POST
-	@Path("/dec")
+	@Path("/decrypt")
 	public Response getDecStr(String cyphertext);
 	
 	@POST

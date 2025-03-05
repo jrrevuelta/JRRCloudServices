@@ -23,6 +23,7 @@ public class S3ObjectManager {
 	
 	private String contentType;
 	private List<Tag> tags;
+	private String folder;
 	
 	private static final Logger log = Logger.getLogger("org.jrrevuelta.cloudservices.aws.S3ObjectManager");
 	
@@ -51,9 +52,13 @@ public class S3ObjectManager {
 	public void putS3Object(String bucketName, String objectKey, byte[] contents) {
 		
 		try {
+			String objectFullName = objectKey;
+			if (folder != null && !folder.isEmpty()) {
+				objectFullName = folder + objectKey;
+			}
 			PutObjectRequest.Builder builder = PutObjectRequest.builder()
 					.bucket(bucketName)
-					.key(objectKey);
+					.key(objectFullName);
 			if (contentType != null && !contentType.isEmpty()) {
 				builder.contentType(contentType);
 			}
@@ -80,5 +85,8 @@ public class S3ObjectManager {
 	
 	public List<Tag> getTags() { return tags; }
 	public void setTags(List<Tag> tags) { this.tags = tags; }
+	
+	public String getFolder() { return folder; }
+	public void setFolder(String folder) { this.folder = folder; }
 	
 }

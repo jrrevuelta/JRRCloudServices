@@ -24,13 +24,23 @@ public class TestResourceService implements TestResource {
 	private static final String KMS_KEY_ID = "alias/jrr-testcloudservices-key-001";  /// Needed only to access/use the KMS encrypt/decrypt functions
 	/// Actually, in the case of AWS, only this KMS KeyId (or alias) is needed. But in the case of GCP, there are two components: The KMS KeyId and the KeyringId.
 	
+	private static final String FOLDER = "folder1";
+	
 	private static final Logger log = Logger.getLogger("org.jrrevuelta.test.awscloudservices.rest.TestResourceService");
+	
+	///  Constructors and Initialization
 	
 	public TestResourceService() {
 		super();
 		log.fine("JRR: Instantiating TestResourceService.");
 	}
 	
+	///  TestResource interface implementation
+	
+	/**
+	 * Get Encrypted String
+	 * 
+	 */
 	@Override
 	public Response getEncStr(String plaintext) {
 		
@@ -53,7 +63,11 @@ public class TestResourceService implements TestResource {
 		return builder.build();
 		
 	}
-
+	
+	/**
+	 * Get De-crypted String
+	 * 
+	 */
 	@Override
 	public Response getDecStr(String cyphertext) {
 		
@@ -76,7 +90,11 @@ public class TestResourceService implements TestResource {
 		return builder.build();
 		
 	}
-
+	
+	/**
+	 * Put Object
+	 * 
+	 */
 	@Override
 	public Response putObject(String bucket, String key, String contentType, byte[] contents) {
 		
@@ -84,9 +102,10 @@ public class TestResourceService implements TestResource {
 		
 		if (context instanceof AWSContext) {
 			S3ObjectManager s3Access = new S3ObjectManager((AWSContext)context);
+			s3Access.setFolder(FOLDER);
 			s3Access.setContentType(contentType);
 			s3Access.putS3Object(bucket, key, contents);
-			builder = Response.created(URI.create("/cloud-service/object/" + key));
+			builder = Response.created(URI.create(bucket + "/" + FOLDER + "/" + key));
 			
 		} else {
 			builder = Response.serverError();
