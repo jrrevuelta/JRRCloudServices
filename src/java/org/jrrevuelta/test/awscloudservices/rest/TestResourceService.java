@@ -24,7 +24,7 @@ public class TestResourceService implements TestResource {
 	private static final String KMS_KEY_ID = "alias/jrr-testcloudservices-key-001";  /// Needed only to access/use the KMS encrypt/decrypt functions
 	/// Actually, in the case of AWS, only this KMS KeyId (or alias) is needed. But in the case of GCP, there are two components: The KMS KeyId and the KeyringId.
 	
-	private static final String FOLDER = "folder1";
+	private static final String FOLDER = "folder1/";
 	
 	private static final Logger log = Logger.getLogger("org.jrrevuelta.test.awscloudservices.rest.TestResourceService");
 	
